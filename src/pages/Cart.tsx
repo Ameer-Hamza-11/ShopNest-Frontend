@@ -1,4 +1,4 @@
-import { addToCart, removeCartItem } from "@/redux/cartSlice";
+import { addToCart, removeCartItem, type CartItem } from "../redux/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
@@ -14,7 +14,7 @@ const Cart = () => {
     dispatch(removeCartItem(id));
   };
 
-  const handleUpdateQty = (item, qty: number) => {
+  const handleUpdateQty = (item: CartItem, qty: number) => {
     if (qty > 0) {
       dispatch(addToCart({ ...item, quantity: qty }));
     }

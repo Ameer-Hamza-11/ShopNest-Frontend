@@ -50,7 +50,7 @@ const Login = () => {
     },
   });
 
-  const handleFormSubmit = (data) => {
+  const handleFormSubmit = (data: LoginInput) => {
     mutation.mutate(data);
   };
 

@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { clearCart } from "@/redux/cartSlice";
 import { useAuth } from "@/hooks/useAuth";
-import z from "zod/v3";
+import z from "zod";
 
 const checkoutSchema = z.object({
   fullName: z.string().min(3),
@@ -21,25 +21,28 @@ const checkoutSchema = z.object({
   country: z.string().min(2),
 });
 
+// Create a specific TypeScript type derived from your local checkout validation schema
+type CheckoutFormData = z.infer<typeof checkoutSchema>;
+
 const Checkout = () => {
+  // Use the local schema type here so React Hook Form expects exactly the input values
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<CheckoutFormData>({
     resolver: zodResolver(checkoutSchema),
   });
 
   const { user } = useAuth();
-
   const dispatch = useAppDispatch();
-
   const items = useAppSelector((state) => state.cart.cartItems);
 
   const totalPrice = items.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+  
   type ApiErrorResponse = {
     success: boolean;
     message: string;
@@ -64,10 +67,11 @@ const Checkout = () => {
     },
   });
 
-  const handleFormSubmit = (data: CreateOrderInput) => {
-    const orderData = {
-      ...data,
-
+  // FIXED: Changed parameter type from CreateOrderInput to CheckoutFormData
+  const handleFormSubmit = (formData: CheckoutFormData) => {
+    // Construct the complete shape expected by CreateOrderInput manually 
+    const orderData: CreateOrderInput = {
+      ...formData,
       items: items.map((item) => ({
         productId: item.productId,
         qty: item.quantity,
@@ -75,7 +79,6 @@ const Checkout = () => {
     };
 
     console.log(orderData);
-
     mutation.mutate(orderData);
   };
 
@@ -87,7 +90,6 @@ const Checkout = () => {
         {/* Heading */}
         <div className="mb-10">
           <h1 className="text-4xl font-bold text-white">Checkout</h1>
-
           <p className="mt-2 text-zinc-400">
             Enter your shipping information to complete your order.
           </p>
@@ -115,7 +117,7 @@ const Checkout = () => {
               </label>
 
               <input
-                defaultValue={user.name}
+                defaultValue={user?.name || ""}
                 type="text"
                 placeholder="Enter your full name"
                 required
@@ -282,34 +284,30 @@ const Checkout = () => {
             >
               <div className="flex items-center justify-between">
                 <span className="text-zinc-400">Total Amount</span>
-
-                <span className="text-2xl font-bold text-orange-500">
+                <span className="text-xl font-bold text-orange-500">
                   ${totalPrice.toFixed(2)}
                 </span>
               </div>
             </div>
 
-            {/* Button */}
+            {/* Submit Button */}
             <button
               type="submit"
+              disabled={mutation.isPending || items.length === 0}
               className="
-                mt-6
                 w-full
                 rounded-lg
-                bg-orange-500
-                px-4
+                bg-orange-600
                 py-3
-
                 font-semibold
-                text-black
-
-                transition-all
-                duration-300
-
-                hover:bg-orange-400
+                text-white
+                transition
+                hover:bg-orange-700
+                disabled:cursor-not-allowed
+                disabled:opacity-50
               "
             >
-              {mutation.isPending ? "Ordering...." : "Place Order"}
+              {mutation.isPending ? "Placing Order..." : "Place Order"}
             </button>
           </form>
         </div>

@@ -31,7 +31,8 @@ export type allProducts = {
   
 
 api.interceptors.request.use((config) => {
-  const user = JSON.parse(localStorage.getItem("user")) || "null";
+  const storedUser = localStorage.getItem("user");
+  const user = storedUser ? JSON.parse(storedUser) : null;
 
   if (user?.token) {
     config.headers.Authorization = `Bearer ${user.token}`;

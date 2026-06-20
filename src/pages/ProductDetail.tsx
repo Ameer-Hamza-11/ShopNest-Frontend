@@ -12,7 +12,7 @@ const ProductDetail = () => {
 
   const { data, error, isPending, isError } = useQuery({
     queryKey: ["product", id],
-    queryFn: () => getDetailedProducts(id),
+    queryFn: () => getDetailedProducts(id || ""),
   });
 
 

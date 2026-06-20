@@ -1,5 +1,5 @@
 import { AuthContext } from "@/context/AuthContext";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 
 export type UserData = {
   userId: string;
@@ -14,7 +14,7 @@ export type AuthContextType = {
   login: (userData: UserData) => void;
   logout: () => void;
 };
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }: {children: ReactNode}) => {
   const [user, setUser] = useState<UserData | null>(() => {
     const storedUser = localStorage.getItem("user");
 

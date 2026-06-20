@@ -105,7 +105,7 @@ const Profile = () => {
               <p className="text-sm text-zinc-500">Full Name</p>
 
               <p className="mt-2 break-words text-lg font-semibold text-white">
-                {user.name}
+                {user?.name}
               </p>
             </div>
 
@@ -120,7 +120,7 @@ const Profile = () => {
               <p className="text-sm text-zinc-500">Email Address</p>
 
               <p className="mt-2 break-all text-lg font-semibold text-white">
-                {user.email}
+                {user?.email}
               </p>
             </div>
 
@@ -147,7 +147,7 @@ const Profile = () => {
                     text-orange-500
                   "
               >
-                {user.role.toUpperCase()}
+                {user?.role.toUpperCase()}
               </span>
             </div>
           </div>
