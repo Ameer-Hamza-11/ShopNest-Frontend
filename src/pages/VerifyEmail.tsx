@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
-import { verifyEmailSchema, type verifyEmailInput } from "../../../../shared/schemas/auth.schema";
+import { verifyEmailSchema, type verifyEmailInput } from "../schemas/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 

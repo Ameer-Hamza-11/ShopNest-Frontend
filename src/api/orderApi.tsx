@@ -1,4 +1,4 @@
-import type { CreateOrderInput } from "../../../../shared/schemas/order.schema";
+import type { CreateOrderInput } from "../schemas/order.schema";
 import { api } from "./api";
 
 export type Order = {

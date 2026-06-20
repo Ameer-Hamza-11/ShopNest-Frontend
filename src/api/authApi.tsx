@@ -3,7 +3,7 @@ import type {
   LoginInput,
   RegisterInput,
   verifyEmailInput,
-} from "../../../../shared/schemas/auth.schema";
+} from "../schemas/auth.schema";
 
 export type RegisterResponse = {
   success: boolean;

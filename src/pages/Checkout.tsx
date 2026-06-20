@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import {
   // createOrderSchema,
   type CreateOrderInput,
-} from "../../../../shared/schemas/order.schema";
+} from "../schemas/order.schema";
 import { useMutation } from "@tanstack/react-query";
 import { createOrder, type OrderResponse } from "@/api/orderApi";
 import type { AxiosError } from "axios";

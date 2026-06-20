@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   loginSchema,
   type LoginInput,
-} from "../../../../shared/schemas/auth.schema";
+} from "../schemas/auth.schema"
 import { useMutation } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import { loginApi, type LoginResponse } from "@/api/authApi";

@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import {
   registerSchema,
   type RegisterInput,
-} from "../../../../shared/schemas/auth.schema";
+} from "../schemas/auth.schema";
 import { useAuth } from "@/hooks/useAuth";
 import type { AxiosError } from "axios";
 
