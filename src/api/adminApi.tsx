@@ -72,9 +72,11 @@ export const getOrders = async (): Promise<Order[]> => {
   }
 };
 
-export const getProducts = async (): Promise<ProductsResponse> => {
+export const getProducts = async (page: number, search:string ): Promise<ProductsResponse> => {
   try {
-    const response = await api.get("/products");
+    const response = await api.get(
+      `/products?page=${page}&limit=8&search=${search}`
+    );;
     return response.data.data;
   } catch (error) {
     console.error(error);

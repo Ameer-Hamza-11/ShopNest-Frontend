@@ -1,15 +1,19 @@
 import { deleteProduct, getProducts } from "@/api/adminApi";
-// import { useAuth } from "@/hooks/useAuth";
+
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
+import { useDebounce } from "use-debounce";
 
 const AdminProducts = () => {
-  // const { user } = useAuth();
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const [debouncedSearch] = useDebounce(search, 1000);
 
   const { data, isPending, error } = useQuery({
-    queryKey: ["adminProducts"],
-    queryFn: getProducts,
+    queryKey: ["adminProducts", page, debouncedSearch],
+    queryFn: () => getProducts(page, search),
   });
 
   const queryClient = useQueryClient();
@@ -85,6 +89,29 @@ const AdminProducts = () => {
             >
               + Add Product
             </Link>
+          </div>
+          <div className="mb-6">
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
+              className="
+      w-full
+      rounded-xl
+      border
+      border-zinc-700
+      bg-zinc-950
+      px-4
+      py-3
+      text-white
+      outline-none
+      focus:border-orange-500
+    "
+            />
           </div>
 
           {/* Empty State */}
@@ -184,8 +211,8 @@ const AdminProducts = () => {
                       </Link>
 
                       <button
-                      disabled={mutation.isPending}
-                      onClick={() => handleDeleteButton(product.id)}
+                        disabled={mutation.isPending}
+                        onClick={() => handleDeleteButton(product.id)}
                         className="
     flex-1
     rounded-xl
@@ -196,7 +223,7 @@ const AdminProducts = () => {
     text-red-500
   "
                       >
-                       {mutation.isPending ? "Deleting..." : "Delete"}
+                        {mutation.isPending ? "Deleting..." : "Delete"}
                       </button>
                     </div>
                   </div>
@@ -330,6 +357,42 @@ const AdminProducts = () => {
               </div>
             </>
           )}
+          <div className="mt-8 flex items-center justify-center gap-4">
+            <button
+              disabled={page === 1}
+              onClick={() => setPage((prev) => prev - 1)}
+              className="
+      rounded-lg
+      border
+      border-zinc-700
+      px-5
+      py-2
+      text-white
+      disabled:opacity-50
+    "
+            >
+              Previous
+            </button>
+
+            <span className="text-white">
+              Page {data?.currentPage} of {data?.totalPages}
+            </span>
+
+            <button
+              disabled={!data?.hasMore}
+              onClick={() => setPage((prev) => prev + 1)}
+              className="
+      rounded-lg
+      bg-orange-500
+      px-5
+      py-2
+      text-white
+      disabled:bg-zinc-700
+    "
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </section>
