@@ -46,7 +46,7 @@ export const getUsers = async (): Promise<User[]> => {
     throw error;
   }
 };
-
+  
 type Order = {
   id: string;
   userId: string;

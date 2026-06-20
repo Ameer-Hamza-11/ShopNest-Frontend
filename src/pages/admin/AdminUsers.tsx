@@ -18,9 +18,7 @@ const AdminUsers = () => {
   if (error) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-zinc-950">
-        <p className="text-lg text-red-500">
-          Error: {error.message}
-        </p>
+        <p className="text-lg text-red-500">Error: {error.message}</p>
       </div>
     );
   }
@@ -31,13 +29,13 @@ const AdminUsers = () => {
     <section className="min-h-screen bg-zinc-950 px-4 py-10">
       <div className="mx-auto max-w-7xl">
         <div className="rounded-3xl border border-zinc-800 bg-zinc-900 p-6 md:p-8">
-          {/* Header */}
+
+          {/* HEADER */}
           <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
               <h1 className="text-3xl font-bold text-white">
                 User Directory
               </h1>
-
               <p className="mt-2 text-zinc-400">
                 Manage and monitor all registered users.
               </p>
@@ -51,32 +49,24 @@ const AdminUsers = () => {
             </div>
           </div>
 
-          {/* MOBILE CARDS */}
+          {/* MOBILE */}
           <div className="grid gap-4 md:hidden">
             {users.map((user) => (
               <div
                 key={user.id}
-                className="
-                  rounded-2xl
-                  border border-zinc-800
-                  bg-zinc-950
-                  p-5
-                  transition-all
-                  duration-300
-                  hover:border-orange-500/30
-                "
+                className="rounded-2xl border border-zinc-800 bg-zinc-950 p-5"
               >
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <h3 className="font-semibold text-white">
-                      {user.name}
-                    </h3>
+                <h3 className="font-semibold text-white">{user.name}</h3>
 
-                    <p className="mt-1 text-sm text-zinc-400 break-all">
-                      {user.email}
-                    </p>
-                  </div>
+                <p className="mt-1 text-sm text-zinc-400 break-all">
+                  📧 {user.email}
+                </p>
 
+                <p className="mt-1 text-sm text-zinc-400">
+                  📱 {user.phoneNumber ?? "N/A"}
+                </p>
+
+                <div className="mt-3 flex justify-between">
                   <span
                     className={`rounded-full px-3 py-1 text-xs font-semibold ${
                       user.role === "admin"
@@ -86,57 +76,51 @@ const AdminUsers = () => {
                   >
                     {user.role.toUpperCase()}
                   </span>
+
+                  <span
+                    className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                      user.verified
+                        ? "bg-green-500/10 text-green-500"
+                        : "bg-red-500/10 text-red-500"
+                    }`}
+                  >
+                    {user.verified ? "Verified" : "Not Verified"}
+                  </span>
                 </div>
 
-                <div className="mt-4 border-t border-zinc-800 pt-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-zinc-500">
-                      Verification
-                    </span>
-
-                    <span
-                      className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                        user.verified
-                          ? "bg-green-500/10 text-green-500"
-                          : "bg-red-500/10 text-red-500"
-                      }`}
-                    >
-                      {user.verified
-                        ? "✓ Verified"
-                        : "✕ Not Verified"}
-                    </span>
-                  </div>
-
-                  <p className="mt-4 text-xs text-zinc-600 break-all">
-                    ID: {user.id}
-                  </p>
-                </div>
+                <p className="mt-3 text-xs text-zinc-600 break-all">
+                  ID: {user.id}
+                </p>
               </div>
             ))}
           </div>
 
-          {/* DESKTOP TABLE */}
+          {/* DESKTOP */}
           <div className="hidden overflow-x-auto md:block">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-zinc-800">
-                  <th className="px-4 py-4 text-left text-sm font-semibold text-zinc-500">
+                  <th className="px-4 py-4 text-left text-sm text-zinc-500">
                     USER
                   </th>
 
-                  <th className="px-4 py-4 text-left text-sm font-semibold text-zinc-500">
+                  <th className="px-4 py-4 text-left text-sm text-zinc-500">
                     EMAIL
                   </th>
 
-                  <th className="px-4 py-4 text-left text-sm font-semibold text-zinc-500">
+                  <th className="px-4 py-4 text-left text-sm text-zinc-500">
+                    PHONE
+                  </th>
+
+                  <th className="px-4 py-4 text-left text-sm text-zinc-500">
                     ROLE
                   </th>
 
-                  <th className="px-4 py-4 text-left text-sm font-semibold text-zinc-500">
+                  <th className="px-4 py-4 text-left text-sm text-zinc-500">
                     STATUS
                   </th>
 
-                  <th className="px-4 py-4 text-left text-sm font-semibold text-zinc-500">
+                  <th className="px-4 py-4 text-left text-sm text-zinc-500">
                     ID
                   </th>
                 </tr>
@@ -146,22 +130,18 @@ const AdminUsers = () => {
                 {users.map((user) => (
                   <tr
                     key={user.id}
-                    className="
-                      border-b
-                      border-zinc-800
-                      transition-all
-                      duration-300
-                      hover:bg-zinc-800/30
-                    "
+                    className="border-b border-zinc-800 hover:bg-zinc-800/20"
                   >
-                    <td className="px-4 py-5">
-                      <p className="font-medium text-white">
-                        {user.name}
-                      </p>
+                    <td className="px-4 py-5 text-white font-medium">
+                      {user.name}
+                    </td>
+
+                    <td className="px-4 py-5 text-zinc-300 break-all">
+                      {user.email}
                     </td>
 
                     <td className="px-4 py-5 text-zinc-300">
-                      {user.email}
+                      {user.phoneNumber ?? "N/A"}
                     </td>
 
                     <td className="px-4 py-5">
@@ -184,13 +164,11 @@ const AdminUsers = () => {
                             : "bg-red-500/10 text-red-500"
                         }`}
                       >
-                        {user.verified
-                          ? "✓ Verified"
-                          : "✕ Not Verified"}
+                        {user.verified ? "Verified" : "Not Verified"}
                       </span>
                     </td>
 
-                    <td className="max-w-[200px] truncate px-4 py-5 text-zinc-500">
+                    <td className="px-4 py-5 text-zinc-500 max-w-[180px] truncate">
                       {user.id}
                     </td>
                   </tr>
@@ -198,6 +176,7 @@ const AdminUsers = () => {
               </tbody>
             </table>
           </div>
+
         </div>
       </div>
     </section>
